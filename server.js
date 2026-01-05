@@ -6,13 +6,14 @@ const profileRoutes = require('./Routes/profileRoutes')
 const companyRoutes = require('./Routes/companyRoutes')
 const jobRoutes = require('./Routes/jobRoutes')
 const applicationRoutes = require('./Routes/applicationRoutes')
-
+const cors = require('cors')
 
 
 
 dontenv.config()
 connectDB()
 const app = express()
+cors()
 
 
 app.use(express.json())

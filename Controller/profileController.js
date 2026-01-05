@@ -8,9 +8,9 @@ const createProfile = async (req, res) => {
 
     if (!bio || !skills || !education || !resumeLink || !portfolioLink || !experience) return res.status(400).json("All fields are required!")
 
-    const myProfile = await Profile.create({  bio, skills, education, resumeLink, portfolioLink, experience })
+    const myProfile = await Profile.create({ bio, skills, education, resumeLink, portfolioLink, experience })
 
-// user: req.user.id, Use in line 11
+    // user: req.user.id, Use in line 11
 
     res.status(200).json({ message: 'Profile has been successfully created', profile: myProfile })
 
@@ -29,4 +29,14 @@ const getProfile = async (req, res) => {
 
 }
 
-module.exports = { getProfile, createProfile }
+const editProfile = async (req, res) => {
+    const profile = await Profile.findById({ user: req.user._id })
+    if (!profile) return res.status.json('Profile not found...')
+
+    Object.assign(profile, req.body)
+    const updatedProfile = await profile.save()
+
+    res.status(200).json(updatedProfile)
+}
+
+module.exports = { getProfile, createProfile, editProfile }
